@@ -78,9 +78,9 @@ void mostrarHojasRutaFechaSeleccionada(eHojaRuta* listaHojaRuta, int sizeH,eTran
 	int anchoColumnaDesc = -18;
 
 	printf("*** Hoja ruta efectuada en fecha seleccionada ***\n\n");
-    utn_getEntero(&dia, 4, "Ingrese dia" , "error...", 1, 31);
-    utn_getEntero(&mes, 4, "Ingrese mes" , "error...", 1, 12);
-    utn_getEntero(&anio, 4, "Ingrese anio" , "error...", 2022, 3022);
+    utn_getEntero(&dia, 4, "Ingrese dia: [1-31] " , "error...", 1, 31);
+    utn_getEntero(&mes, 4, "Ingrese mes: [1-12] " , "error...", 1, 12);
+    utn_getEntero(&anio, 4, "Ingrese anio: [2022-3022] " , "error...", 2022, 3022);
 
     printf("+--------------------+-------------------------+-------------------------+-------------------------+------------------+\n");
    	printf("|%*s|%*s|%*s|%*s|%*s|\n", anchoColumnaIDT, " IDH", anchoColumnaTipo,
@@ -156,9 +156,9 @@ void informarImporteTotalTipoFechaSeleccionada(eHojaRuta* listaH, int sizeH, eTr
     {
         printf("   *** importe total hoja ruta fecha tipo ***\n");
 
-        utn_getEntero(&dia, 4, "Ingrese dia" , "error...", 1, 31);
-        utn_getEntero(&mes, 4, "Ingrese mes" , "error...", 1, 12);
-        utn_getEntero(&anio, 4, "Ingrese anio" , "error...", 2022, 3022);
+        utn_getEntero(&dia, 4, "Ingrese dia: [1-31] " , "error...", 1, 31);
+        utn_getEntero(&mes, 4, "Ingrese mes: [1-12] " , "error...", 1, 12);
+        utn_getEntero(&anio, 4, "Ingrese anio: [2022-3022] " , "error...", 2022, 3022);
 
         mostrarTipos(listaTipo, sizeTipo);
         utn_getEntero(&idTipo, 3,"Ingrese el id del tipo : ", "Id tipo invalido.\n", 1000, 1003);
