@@ -10,6 +10,8 @@
 #define VACIO 1
 #define OCUPADO 0
 
+
+
 typedef struct
 {
 	int idTransporte;
@@ -59,6 +61,51 @@ int buscarTransportePorId(eTransporte* listaT, int size, int idT);
 
 
 /**
+ * \fn int altaTransporte(eTransporte*, int, eTipo*, int)
+ * \brief
+ *
+ * \param listaT
+ * \param tamT
+ * \param listaTipo
+ * \param tamTipo
+ * \return
+ */
+int altaTransporte(eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
+
+
+
+/**
+ * \fn int modificarTransporte(int, eTransporte*, int, eTipo*, int)
+ * \brief
+ *
+ * \param flagT
+ * \param listaT
+ * \param tamT
+ * \param listaTipo
+ * \param tamTipo
+ * \return
+ */
+int modificarTransporte(int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
+
+
+
+/**
+ * \fn int bajaTransporte(int, int, eTransporte*, int, eTipo*, int)
+ * \brief Elimina un ID de transporte
+ *
+ * \param idTransporteAux
+ * \param flagT bandera que verifica si hay transportes cargados
+ * \param listaT array de tipo eTransporte
+ * \param tamT tamanio del transporte
+ * \param listaTipo  array de struct eTipo
+ * \param tamTipo    tamanio de listaTipo
+ * \return retorno = 1 se encontro una baja
+ */
+int bajaTransporte(int idTransporteAux, int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
+
+
+
+/**
  * \fn void mostrarTransporte(eTransporte, eTipo*, int)
  * \brief
  *
@@ -95,6 +142,18 @@ void mostrarTransportes(eTransporte* listaT, int tamT, eTipo* listaTipo, int siz
 int ordenarTransportes(eTransporte* listaT, int tamT);
 
 
+
+/**
+ * \fn int cargarDescripcionTransporte(char*, int, eTransporte*, int)
+ * \brief
+ *
+ * \param descripcion
+ * \param idTransporteAux
+ * \param listaT
+ * \param sizeT
+ * \return
+ */
+int cargarDescripcionTransporte(char* descripcion, int idTransporteAux, eTransporte* listaT, int sizeT);
 
 #endif  /*TRANSPORTE_H_*/
 

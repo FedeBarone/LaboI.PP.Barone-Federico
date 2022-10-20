@@ -78,18 +78,6 @@ void darBajaTransporte(int flagT, eTransporte* listaT, int tamT, eTipo* listaTip
 
 
 
-/**
- * \fn int modificarTransporte(int, eTransporte*, int, eTipo*, int)
- * \brief
- *
- * \param flagT
- * \param listaT
- * \param tamT
- * \param listaTipo
- * \param tamTipo
- * \return
- */
-int modificarTransporte(int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
 
 
 /**
@@ -159,58 +147,30 @@ int ejecutarMenuListarHojaRuta();
  * \param listaH
  * \param tamH
  */
-void listarHojaRuta(int flagH,eHojaRuta* listaH, int tamH);
-
+void listarHojaRuta(int flagH,eHojaRuta* listaH, int tamH, eTransporte* listaT, int sizeT);
 
 
 
 /**
- * \fn int altaTransporte(eTransporte*, int, eTipo*, int)
+ * \fn int mostrarMenuInformes()
  * \brief
  *
- * \param listaT
- * \param tamT
- * \param listaTipo
- * \param tamTipo
  * \return
  */
-int altaTransporte(eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
-
-
-
+int mostrarMenuInformes();
 
 /**
- * \fn int altaHojaRuta(int, eHojaRuta*, int, eTransporte*, int, eTipo*, int)
+ * \fn void ejecutarInformes(eTransporte*, int, eTipo*, int, eHojaRuta*, int)
  * \brief
  *
- * \param idAux
+ * \param listaTransporte
+ * \param sizeT
+ * \param listaTipo
+ * \param sizeTipo
  * \param listaH
- * \param tamH
- * \param listaT
- * \param tamT
- * \param listaTipo
- * \param tamTipo
- * \return
+ * \param sizeH
  */
-int altaHojaRuta(int idAux, eHojaRuta* listaH, int tamH, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
-
-
-
-
-
-/**
- * \fn int bajaTransporte(int, int, eTransporte*, int, eTipo*, int)
- * \brief Elimina un ID de transporte
- *
- * \param idTransporteAux
- * \param flagT bandera que verifica si hay transportes cargados
- * \param listaT array de tipo eTransporte
- * \param tamT tamanio del transporte
- * \param listaTipo  array de struct eTipo
- * \param tamTipo    tamanio de listaTipo
- * \return retorno = 1 se encontro una baja
- */
-int bajaTransporte(int idTransporteAux, int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
+void ejecutarInformes(eTransporte* listaTransporte,int sizeT, eTipo* listaTipo, int sizeTipo, eHojaRuta* listaH, int sizeH);
 
 #endif /* MENUS_H_ */
 

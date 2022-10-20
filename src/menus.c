@@ -9,24 +9,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "fecha.h"
 #include "tipo.h"
 #include "transporte.h"
 #include "hojaRuta.h"
 #include "input.h"
 #include "menus.h"
+#include "informes.h"
 #define VACIO 1
 #define OCUPADO 0
-#define BAJA -1
-
-static int eTransporte_ObtenerID(void);
-static int eTransporte_ObtenerID(void)
-{
-	static int idTransporteAuto = 0;
-	return idTransporteAuto++;
-}
-
-
 
 int mostrarMenuPrincipal()
 {
@@ -89,7 +79,6 @@ void darDeAltaTransporte(int* flagT,eTransporte* listaT, int tamT, eTipo* listaT
 
 									if(altaTransporte( listaT, tamT, listaTipo,tamTipo) == 1)
 									{
-										//idTransporte++;
 										*flagT = 1;
 
 									}
@@ -130,8 +119,6 @@ void darDeAltaHojaRuta(int* flagH, eHojaRuta* listaH, int tamH, eTransporte* lis
 	char continuar = 's';
 	char confimar;
 
-	int idHojaRuta = 20000;
-
 			if(flagH!= NULL  && listaH != NULL && tamH >0 && listaT != NULL && tamT >0 && listaTipo != NULL && tamTipo> 0)
 			{
 				do
@@ -140,9 +127,8 @@ void darDeAltaHojaRuta(int* flagH, eHojaRuta* listaH, int tamH, eTransporte* lis
 					{
 							case 1:
 
-									if(altaHojaRuta(idHojaRuta,listaH, tamH, listaT, tamT, listaTipo, tamTipo) == 1)
+									if(altaHojaRuta(listaH, tamH, listaT, tamT, listaTipo, tamTipo) == 1)
 								    {
-											idHojaRuta++;
 
 											*flagH = 1;
 
@@ -207,122 +193,6 @@ void darBajaTransporte(int flagT, eTransporte* listaT, int tamT, eTipo* listaTip
 
 
 
-
-
-
-
-int modificarTransporte(int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo)
-{
-	int retorno = -1;
-	int idTransporteAux;
-	int indice;
-	int opcion;
-	char continuar;
-	char confirmar;
-	float pesoCargaModificado;
-	int cantidadBultosModificado;
-
-	printf("---MODIFICAR---\n");
-
-	if(flagT == 1 && listaT != NULL && tamT > 0 && listaTipo != NULL && tamTipo > 0)
-	{
-		mostrarTransportes(listaT, tamT, listaTipo, tamTipo);
-
-		if(listaT != NULL && tamT > 0 && utn_getEntero(&idTransporteAux, 4, "\nIngrese el ID del transporte que va a modificar", "ERROR...Ese ID no existe\n", 0, 20)==0)
-		{
-			indice = buscarTransportePorId(listaT, tamT, idTransporteAux);
-
-			if(indice == -1)
-			{
-				printf("ERROR...Ese ID no existe\n");
-			}
-			else
-			{
-				printf("El ID %d pertenece al siguiente transporte:\n", idTransporteAux);
-				printf("ID     Tipo        Cantidad      Precio\n\n");
-				mostrarTransporte(listaT[indice], listaTipo, tamTipo);
-				printf("Desea modificar? [s/n] ");
-				fflush(stdin);
-				scanf("%c", &confirmar);
-
-				if(confirmar == 's')
-				{
-					do
-					{
-
-						printf("1-[Modificar pesoCarga\n");
-						printf("2-[Modificar cantidadBultos\n");
-
-
-						if(utn_getEntero(&opcion, 4, "Eliga la opcion que quiere modificar ", "ERROR...", 1, 2) == 0)
-						{
-							switch(opcion)
-							{
-								case 1:
-
-									if(utn_getFlotante(&pesoCargaModificado, 3, "Eliga el nuevo peso [250-2500] ", "ERROR...No eligio una opcion valida", 250, 2500) == 0)
-									{
-										listaT[indice].pesoCarga = pesoCargaModificado;
-										retorno = 0;
-									}
-
-									break;
-								case 2:
-
-									if(utn_getEntero(&cantidadBultosModificado, 3, "Eliga el nuevo peso [250-2500] ", "ERROR...No eligio una opcion valida", 250, 2500) == 0)
-									{
-										listaT[indice].cantidadBultos = cantidadBultosModificado;
-										retorno = 0;
-									}
-
-									break;
-
-								default :
-									printf("No es una opcion valida.\n\n");
-									break;
-
-							}
-
-							if(retorno == 0)
-							{
-								printf("se han modificado los datos correctamente\n");
-								printf("ID        Tipo        cantidad      Precio\n\n");
-								mostrarTransporte(listaT[indice], listaTipo, tamTipo);
-							}
-							printf("Desea seguir modificando? s/n: ");
-							fflush(stdin);
-							scanf("%c", &confirmar);
-							if(confirmar == 's')
-							{
-								continuar = 'n';
-							}
-						}
-
-					}while(continuar == 's');
-				}
-				else
-				{
-					if(confirmar == 'n')
-					{
-						printf("No se han registrado modificaciones.\n");
-					}
-				}
-
-			}
-		}
-	}
-	else
-	{
-		printf("No hay que modificar.\n");
-	}
-
- return retorno;
-
-}
-
-
-
-
 int ejecutarMenuListarTransporte()
 {
 	int opcion;
@@ -351,8 +221,6 @@ void listarTransporte(int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo
 
 					  	 	 if(flagT == 1)
 					  	 	 {
-					  	 		 //Ascendente o descendente
-					  	 		 //utn_getEntero(&ordenamiento,3, "Ascendente 1, Descendente 0 ", "Error, ese criterio no existe\n", 0, 1);
 					  	 		 ordenarTransportes(listaT, tamT);
 					  	 		 mostrarTransportes(listaT, tamT, listaTipo, tamTipo);
 					  	 	 }
@@ -384,7 +252,6 @@ void listarTransporte(int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo
 			}while(continuar == 's');
 
 }
-
 
 
 
@@ -451,7 +318,7 @@ int ejecutarMenuListarHojaRuta()
 
 
 
-void listarHojaRuta(int flagH,eHojaRuta* listaH, int tamH)
+void listarHojaRuta(int flagH,eHojaRuta* listaH, int tamH, eTransporte* listaT, int sizeT)
 {
 	char continuar = 's';
 	char confirmar;
@@ -463,9 +330,7 @@ void listarHojaRuta(int flagH,eHojaRuta* listaH, int tamH)
 				  case 1:
 					  	  	  if(flagH == 1)
 					  	  	  {
-					  	  		 mostrarHojasRuta(listaH, tamH);
-
-
+					  	  		mostrarHojasRuta(listaH, tamH, listaT, sizeT);
 
 					  	  	  }
 					  	  	  else
@@ -473,10 +338,8 @@ void listarHojaRuta(int flagH,eHojaRuta* listaH, int tamH)
 					  	  		  printf("No hay hojas de ruta cargadas");
 					  	  	  }
 
-
 					  break;
 				  case 2:
-								//salir
 								printf("\n---EXIT---\n\n ");
 								printf("Confirma salida? s/n: ");
 								fflush(stdin);
@@ -500,154 +363,61 @@ void listarHojaRuta(int flagH,eHojaRuta* listaH, int tamH)
 
 
 
-int altaTransporte( eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo)
+
+int mostrarMenuInformes()
 {
-	int retorno = 0;//no pudo dar de alta
-	int indice = buscarIndiceLibreT(listaT, tamT);
+	int opcion;
 
+		printf("***** INFORMES *****\n\n");
+		printf("1- [Mostrar transportes de un tipo seleccionado]\n");
+		printf("2- [Mostrar todas las hojas de ruta efectuadas en una fecha seleccionada]\n");
+		printf("3- [Informar importe total de las hojas de ruta realizadas en un transporte seleccionado]\n");
+		printf("4- [Informar importe total de todas las hojas de ruta de un tipo en una fecha seleccionada]\n");
+		printf("5- [SALIR]\n");
 
-					if(listaT != NULL && tamT > 0 && listaTipo != NULL && tamTipo > 0)
-					{
-							printf("---ALTA TRANSPORTE---\n");
-							if( indice < 0)
-							{
-								printf("Completo\n");
-							}
-							else
+		utn_getEntero(&opcion, 5," \nIngrese una opcion ","Error, Esa opcion no existe", 1, 5);
 
-							{
-								utn_getEntero(&listaT[indice].cantidadBultos, 3, "\nIngrese cantidad bultos:  [100-50000] ", "Error...\n", 100, 50000);
-								utn_getFlotante(&listaT[indice].pesoCarga, 5, "\nIngrese el peso de la carga: [7000Kg-25000Kg] ", "ERROR\n", 7000, 25000);
-
-
-									printf("\nIngrese descripcion: ");
-									fflush(stdin);
-									gets(listaT[indice].descripcion);
-
-									mostrarTipos(listaTipo, tamTipo);
-
-									if(utn_getEntero(&listaT[indice].tipoId, 3, "Ingrese id tipo: ", "El id ingresado no es valido.\n", 1000, 1003) == 0)
-									{
-										//listaT[indice].idTransporte = idAux;
-										listaT[indice].idTransporte = eTransporte_ObtenerID();
-										listaT[indice].isEmpty = 0; //lleno el lugar
-										 mostrarTransportes(listaT, tamT, listaTipo, tamTipo);
-										retorno = 1;
-									}
-
-
-							}
-
-
-					}
-
-
-	return retorno;
+	return opcion;
 }
 
 
 
-
-
-int altaHojaRuta(int idAux, eHojaRuta* listaH, int tamH, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo)
+void ejecutarInformes(eTransporte* listaTransporte,int sizeT, eTipo* listaTipo, int sizeTipo, eHojaRuta* listaH, int sizeH)
 {
+	char seguir = 's';
+	char confirmar;
 
-	int retorno = 0;
-	int indice = buscarIndiceLibreHojaRuta(listaH, tamH);
-	int idAuxTransporte;
-
-		if(listaH != NULL && tamH > 0 && listaT != NULL && tamT > 0 && listaTipo != NULL && tamTipo > 0)
+	do{
+		switch(mostrarMenuInformes())
 		{
-				printf("---Alta Hoja Ruta---");
-
-				if(indice < 0)
+			case 1:
+				mostrarTransportesTipoSeleccionado(listaTransporte,sizeT, listaTipo, sizeTipo);
+				break;
+			case 2:
+				mostrarHojasRutaFechaSeleccionada(listaH, sizeH, listaTransporte,sizeT);
+				break;
+			case 3:
+				informarImporteTotalTransporteSeleccionado(listaH, sizeH, listaTransporte, sizeT, listaTipo,  sizeTipo);
+				break;
+			case 4:
+				informarImporteTotalTipoFechaSeleccionada(listaH, sizeH, listaTransporte, sizeT, listaTipo, sizeTipo);
+				break;
+			case 5:
+				printf("Confirma salida? s/n: ");
+				fflush(stdin);
+				scanf("%c", &confirmar);
+				if(confirmar == 's')
 				{
-					printf("completo \n");
-
+					seguir = 'n';
 				}
-				else
-				{
-					//printf("Ingrese dia ");
-					//fflush(stdin);
-					if(utn_getEntero(&listaH[indice].fecha.dia, 4, "Ingrese dia" , "error...", 1, 31) == 0)
-					{
-						if(utn_getEntero(&listaH[indice].fecha.mes, 4, "Ingrese mes" , "error...", 1, 12)== 0)
-						{
-							utn_getEntero(&listaH[indice].fecha.anio, 4, "Ingrese anio" , "error...", 2022, 3022);
-						}
-					}
-
-					utn_getEntero(&listaH[indice].precioViaje, 4, "Ingrese el precio del viaje: ", "ERROR...\n", 200, 100000);
-					utn_getFlotante(&listaH[indice].kmsTotales, 4, "Ingrese los kms totales: ", "ERROR...\n", 80, 8500);
-					mostrarTransportes(listaT, tamT, listaTipo, tamTipo);
-
-					if(utn_getEntero(&idAuxTransporte,4, "Ingrese ID de transporte", "Error",0,20) == 0)
-						 mostrarTransportes(listaT, tamT, listaTipo, tamTipo);
-					{
-						if(buscarTransportePorId(listaT, tamT, idAuxTransporte) > -1)
-						{
-							listaH[indice].transporteId = idAuxTransporte;
-							listaH[indice].idHoja = idAux;
-							listaH[indice].isEmpty = 0; //lleno el lugar
-							retorno = 1;
-							 mostrarHojasRuta(listaH, tamH);
-						}
-						else
-						{
-							printf("No existe ese transporte");
-						}
-					}
-
-				}
-
+				break;
+			default:
+				printf("Ingrese una opcion disponible\n\n");
 		}
 
-
-	return retorno;
-}
-
-
-int bajaTransporte(int idTransporteAux, int flagT, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo)
-{
-	int retorno = 0;
-	int indice;
-	char eliminarTransporte;
-
-
-				if(flagT == 1)
-				{
-					indice = buscarTransportePorId(listaT, tamT, idTransporteAux);
-
-					if(indice > -1)
-					{
-						mostrarTransporte(listaT[indice], listaTipo, tamTipo);
-						printf("Eliminar? s/n: ");
-						scanf("%c", &eliminarTransporte);
-						if(eliminarTransporte == 's')
-						{
-								listaT[indice].isEmpty = BAJA;
-								retorno = 1;
-						}
-						else
-						{
-								printf("No se han realizado cambios.\n");
-						}
-					}
-					else
-					{
-						printf("No existe un transporte con ese id.\n");
-					}
-				}
-				else
-				{
-					printf("No hay transportes cargados\n");
-				}
-
-	return retorno;
+	}while(seguir == 's');
 
 }
-
-
 
 
 

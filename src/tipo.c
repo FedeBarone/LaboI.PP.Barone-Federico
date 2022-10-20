@@ -7,11 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fecha.h"
 #include "tipo.h"
 #include "transporte.h"
 #include "hojaRuta.h"
 #include "input.h"
+
 
 
 int cargarDescripcionTipo(char* descripcion, int idTipoAux, eTipo* tipos, int tamT)

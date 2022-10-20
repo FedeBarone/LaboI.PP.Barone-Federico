@@ -8,11 +8,23 @@
 #ifndef HOJARUTA_H_
 #define HOJARUTA_H_
 
+
+
+typedef struct
+{
+	int dia;
+	int mes;
+	int anio;
+
+}eFecha;
+
+
+
 typedef struct
 {
 	int idHoja;
 	int transporteId;
-	int precioViaje;
+	float precioViaje;
 	float kmsTotales;
 	int isEmpty;
 	eFecha fecha;
@@ -44,13 +56,29 @@ int buscarIndiceLibreHojaRuta(eHojaRuta* listaH, int sizeH);
 
 
 /**
+ * \fn int altaHojaRuta(int, eHojaRuta*, int, eTransporte*, int, eTipo*, int)
+ * \brief
+ *
+ * \param idAux
+ * \param listaH
+ * \param tamH
+ * \param listaT
+ * \param tamT
+ * \param listaTipo
+ * \param tamTipo
+ * \return
+ */
+int altaHojaRuta(eHojaRuta* listaH, int tamH, eTransporte* listaT, int tamT, eTipo* listaTipo, int tamTipo);
+
+
+
+/**
  * \fn void mostrarHojaRuta(eHojaRuta)
  * \brief
  *
  * \param hojaRuta
  */
-void mostrarHojaRuta(eHojaRuta hojaRuta);
-
+void mostrarHojaRuta(eHojaRuta hojaRuta , eTransporte* listaT, int sizeT);
 
 
 /**
@@ -60,7 +88,7 @@ void mostrarHojaRuta(eHojaRuta hojaRuta);
  * \param listaH
  * \param sizeH
  */
-void mostrarHojasRuta(eHojaRuta* listaH, int sizeH);
+void mostrarHojasRuta(eHojaRuta* listaH, int sizeH,eTransporte* listaT, int sizeT);
 
 #endif  /*HOJARUTA_H_*/
 

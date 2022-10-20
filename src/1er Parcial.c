@@ -7,12 +7,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "fecha.h"
 #include "tipo.h"
 #include "transporte.h"
 #include "hojaRuta.h"
 #include "input.h"
 #include "menus.h"
+#include "informes.h"
+
 #define TAM_transporte 250
 #define TAMH 30
 #define TAMTIPO 4
@@ -110,7 +111,7 @@ int main(void) {
 			case 7:
 						if(flag == 1)
 						{
-							listarHojaRuta(flagH,hojaRutaAux, TAMH);
+							listarHojaRuta(flagH,hojaRutaAux, TAMH, transporteAux, TAM_transporte);
 						}
 						else
 						{
@@ -119,8 +120,7 @@ int main(void) {
 
 				break;
 			case 8:
-						printf("Informes");
-
+						ejecutarInformes(transporteAux, TAM_transporte, tiposDeCamiones, TAMTIPO, hojaRutaAux, TAMH);
 				break;
 			case 9:
 					printf("\n\n\n---EXIT--- \n\n\n ");
